@@ -1,0 +1,4 @@
+/home/gs/Downloads/kafka-poc-v5-docker/src/main/java/com/br/kafka_poc/KafkaPocApplication.java
+/home/gs/Downloads/kafka-poc-v5-docker/src/main/java/com/br/kafka_poc/consumer/KafkaConsumer.java
+/home/gs/Downloads/kafka-poc-v5-docker/src/main/java/com/br/kafka_poc/controller/KafkaStartupRunner.java
+/home/gs/Downloads/kafka-poc-v5-docker/src/main/java/com/br/kafka_poc/producer/KafkaProducer.java

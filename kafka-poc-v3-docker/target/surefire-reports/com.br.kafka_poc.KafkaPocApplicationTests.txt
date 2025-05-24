@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.br.kafka_poc.KafkaPocApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.128 s -- in com.br.kafka_poc.KafkaPocApplicationTests

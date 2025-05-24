@@ -1,0 +1,4 @@
+/home/gs/Downloads/kafka-poc/src/main/java/com/br/kafka_poc/KafkaPocApplication.java
+/home/gs/Downloads/kafka-poc/src/main/java/com/br/kafka_poc/component/KafkaApplicationRunner.java
+/home/gs/Downloads/kafka-poc/src/main/java/com/br/kafka_poc/consumer/KafkaConsumer.java
+/home/gs/Downloads/kafka-poc/src/main/java/com/br/kafka_poc/producer/KafkaProducer.java
