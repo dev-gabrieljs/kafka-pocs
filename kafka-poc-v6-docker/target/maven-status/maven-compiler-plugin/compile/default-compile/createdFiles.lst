@@ -1,0 +1,4 @@
+com/br/kafka_poc/KafkaStartupRunner.class
+com/br/kafka_poc/consumer/KafkaConsumer.class
+com/br/kafka_poc/KafkaPocApplication.class
+com/br/kafka_poc/producer/KafkaProducer.class
