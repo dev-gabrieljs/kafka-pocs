@@ -1,29 +1,44 @@
 services:
   broker:
     image: apache/kafka:latest
-    container_name: broker
+    container_name: broker  # Nome do container Kafka
     ports:
-      - 9092:9092
+      - 9092:9092  # Mapeia a porta 9092 do container Kafka para a porta 9092 do host
+
     environment:
-      KAFKA_NODE_ID: 1
-      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_NODE_ID: 1  # ID único do nó Kafka dentro do cluster
+      KAFKA_PROCESS_ROLES: broker,controller  # Este broker vai atuar como broker e também como controller (gerenciador do cluster)
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:9092       # <-- IMPORTANTE: usar o nome do serviço aqui
-      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      # O Kafka escutará na porta 9092 para conexões de dados e na porta 9093 para comunicação do controller
+
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:9092  # IMPORTANTE: Usar o nome do serviço aqui
+      # Aqui estamos anunciando o endereço do broker para outros containers na rede Docker.
+      # "broker" é o nome do serviço, então ele pode ser acessado por outros containers com esse nome.
+      # O Spring App e outros containers podem usar "broker:9092" como endereço para se conectar ao Kafka.
+
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER  # Nome do listener usado para comunicação do controller
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      # Especifica que o protocolo PLAINTEXT será usado tanto para o listener de dados quanto para o listener do controller
+
       KAFKA_CONTROLLER_QUORUM_VOTERS: 1@broker:9093
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_NUM_PARTITIONS: 3
+      # Configura a votação do quorum para o controller, que indica que o broker com ID 1 é o único membro do quorum
+
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1  # A quantidade de réplicas para o tópico de offsets
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1  # A quantidade de réplicas para o log de transações
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1  # O número mínimo de réplicas que deve estar disponível para o log de transações
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0  # Atraso em milissegundos para o rebalanceamento inicial do grupo de consumidores
+      KAFKA_NUM_PARTITIONS: 3  # O número de partições criadas para novos tópicos
 
   app:
-    build: .
-    container_name: spring-app
+    build: .  # Indica que o Dockerfile do projeto está no diretório atual (".")
+    container_name: spring-app  # Nome do container do aplicativo Spring Boot
     ports:
-      - "8080:8080"
+      - "8080:8080"  # Mapeia a porta 8080 do container para a porta 8080 do host
+
     environment:
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: broker:9092   # Certifique-se que o nome da variável é igual ao esperado pelo Spring config
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: broker:9092  # Configura o endereço do servidor Kafka para o Spring Boot
+      # Aqui o Spring Boot irá se conectar ao Kafka usando o nome do serviço 'broker' e a porta 9092,
+      # já que os containers Docker podem se comunicar através de nomes de serviços na rede interna.
+
     depends_on:
-      - broker
+      - broker  # O serviço 'app' depende que o 'broker' esteja disponível antes de iniciar
