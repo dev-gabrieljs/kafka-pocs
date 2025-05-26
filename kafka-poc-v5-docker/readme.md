@@ -1,4 +1,4 @@
-# Kafka POÇ (Proof of Concept) - Spring Boot Kafka Integration
+# Kafka POC (Proof of Concept) - Spring Boot Kafka Integration
 Este repositório contém um exemplo de integração entre uma aplicação Spring Boot e o Apache Kafka, utilizando Docker para orquestrar a execução de um broker Kafka e a aplicação Spring Boot.
 
 ## Estrutura do Projeto
